@@ -23,6 +23,7 @@ RUN . ./functions.sh && run_sub ./12-mrtg
 RUN . ./functions.sh && run_sub ./13-cacti
 RUN . ./functions.sh && run_sub ./14-timezone
 
+ADD script/NDOUTILS-POST subcomponents/ndoutils/post-install
 RUN . ./functions.sh && run_sub ./A-subcomponents
 RUN . ./functions.sh && run_sub ./B-installxi
 RUN . ./functions.sh && run_sub ./C-cronjobs
