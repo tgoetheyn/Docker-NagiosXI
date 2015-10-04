@@ -1,0 +1,39 @@
+#!/bin/sh -e
+
+. ../../xi-sys.cfg
+
+pkgname="$1"
+
+echo "NDOUTILS-POST"
+
+# Post-install modifications
+
+# New init file
+cp -f mods/ndo2db.init /etc/init.d/ndo2db
+
+# Copy configs
+cp -f mods/cfg/ndo2db.cfg /usr/local/nagios/etc
+cp -f mods/cfg/ndomod.cfg /usr/local/nagios/etc
+
+	
+# See if database already exists
+echo "NOTE: If prompted, enter the MySQL root password"
+if mysql nagios -u root -p"$mysqlpass" -e 'SELECT COUNT(*) FROM nagios_hosts' &>/dev/null; then
+	echo "NDOUtils database already exists - skipping creation..."
+else
+	# Run SQL to create database and add user
+	mysql -u root -p"$mysqlpass" < mods/create_db.sql
+	#mysql -u root -p"$mysqlpass" nagios < mods/mysql.sql
+	
+	##parse values in case mysql is offloaded 
+	ndopass=$(sed -n '/^db_pass=/ s///p' /usr/local/nagios/etc/ndo2db.cfg)
+	ndohost=$(sed -n '/^db_host=/ s///p' /usr/local/nagios/etc/ndo2db.cfg)
+	ndouser=$(sed -n '/^db_user=/ s///p' /usr/local/nagios/etc/ndo2db.cfg)
+	
+	# Install the database
+	(
+		cd ./"$pkgname"/db
+		./installdb -u "$ndouser" -p "$ndopass" -h "$ndohost" -d nagios
+	)
+fi
+

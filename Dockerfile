@@ -1,0 +1,36 @@
+FROM centos:6 
+MAINTAINER TonyG
+
+RUN yum -y install wget; yum clean all
+WORKDIR /tmp
+RUN wget http://assets.nagios.com/downloads/nagiosxi/xi-latest.tar.gz
+RUN yum -y install tar
+RUN tar xzf xi-latest.tar.gz
+WORKDIR nagiosxi
+RUN ./init.sh && . ./xi-sys.cfg && umask 0022 && . ./functions.sh && log="install.log"
+RUN export INTERACTIVE="False" && export INSTALL_PATH=`pwd`
+RUN . ./functions.sh && run_sub ./0-repos noupdate
+RUN . ./functions.sh && run_sub ./1-prereqs
+RUN . ./functions.sh && run_sub ./2-usersgroups
+RUN . ./functions.sh && run_sub ./3-dbservers
+RUN . ./functions.sh && run_sub ./4-services
+RUN . ./functions.sh && run_sub ./5-sudoers
+RUN sed -i.bak s/selinux/sudoers/g 9-dbbackups
+RUN . ./functions.sh && run_sub ./9-dbbackups
+RUN . ./functions.sh && run_sub ./10-phplimits
+RUN . ./functions.sh && run_sub ./11-sourceguardian
+RUN . ./functions.sh && run_sub ./12-mrtg
+RUN . ./functions.sh && run_sub ./13-cacti
+RUN . ./functions.sh && run_sub ./14-timezone
+
+RUN . ./functions.sh && run_sub ./A-subcomponents
+RUN . ./functions.sh && run_sub ./B-installxi
+RUN . ./functions.sh && run_sub ./C-cronjobs
+RUN . ./functions.sh && run_sub ./D-chkconfigalldaemons
+RUN . ./functions.sh && run_sub ./E-importnagiosql
+RUN . ./functions.sh && run_sub ./F-startdaemons
+RUN . ./functions.sh && run_sub ./Z-webroot
+
+EXPOSE 80 5666 5667
+
+CMD ["/usr/sbin/init"]
