@@ -1,3 +1,5 @@
+/usr/sbin/init
+
 # starting services
 
 /sbin/service mysqld start
