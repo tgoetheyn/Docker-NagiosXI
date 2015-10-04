@@ -32,6 +32,7 @@ RUN service mysqld start && . ./functions.sh && run_sub ./E-importnagiosql
 RUN . ./functions.sh && run_sub ./F-startdaemons
 RUN . ./functions.sh && run_sub ./Z-webroot
 
+ADD start.sh /start.sh
 EXPOSE 80 5666 5667
 
-CMD ["/usr/sbin/init"]
+CMD ["/start.sh"]
