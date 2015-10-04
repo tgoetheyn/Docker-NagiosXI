@@ -25,7 +25,7 @@ RUN . ./functions.sh && run_sub ./14-timezone
 
 ADD scripts/NDOUTILS-POST subcomponents/ndoutils/post-install
 RUN chmod 755 subcomponents/ndoutils/post-install && . ./functions.sh && run_sub ./A-subcomponents
-RUN . ./functions.sh && run_sub ./B-installxi
+RUN service mysqld start && . ./functions.sh && run_sub ./B-installxi
 RUN . ./functions.sh && run_sub ./C-cronjobs
 RUN . ./functions.sh && run_sub ./D-chkconfigalldaemons
 RUN . ./functions.sh && run_sub ./E-importnagiosql
