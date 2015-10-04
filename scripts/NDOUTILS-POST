@@ -12,6 +12,8 @@ echo "NDOUTILS-POST"
 cp -f mods/ndo2db.init /etc/init.d/ndo2db
 
 # Copy configs
+mkdir /usr/local/nagios
+mkdir /usr/local/nagios/etc
 cp -f mods/cfg/ndo2db.cfg /usr/local/nagios/etc
 cp -f mods/cfg/ndomod.cfg /usr/local/nagios/etc
 
@@ -22,6 +24,7 @@ if mysql nagios -u root -p"$mysqlpass" -e 'SELECT COUNT(*) FROM nagios_hosts' &>
 	echo "NDOUtils database already exists - skipping creation..."
 else
 	# Run SQL to create database and add user
+	service mysqld start
 	mysql -u root -p"$mysqlpass" < mods/create_db.sql
 	#mysql -u root -p"$mysqlpass" nagios < mods/mysql.sql
 	
