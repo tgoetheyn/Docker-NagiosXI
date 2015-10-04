@@ -28,7 +28,7 @@ RUN chmod 755 subcomponents/ndoutils/post-install && . ./functions.sh && run_sub
 RUN service mysqld start && . ./functions.sh && run_sub ./B-installxi
 RUN . ./functions.sh && run_sub ./C-cronjobs
 RUN . ./functions.sh && run_sub ./D-chkconfigalldaemons
-RUN . ./functions.sh && run_sub ./E-importnagiosql
+RUN service mysqld start && . ./functions.sh && run_sub ./E-importnagiosql
 RUN . ./functions.sh && run_sub ./F-startdaemons
 RUN . ./functions.sh && run_sub ./Z-webroot
 
