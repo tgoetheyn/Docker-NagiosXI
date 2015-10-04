@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo docker build -t nagiosxi .
+sudo docker build -t tgoetheyn\nagiosxi .
