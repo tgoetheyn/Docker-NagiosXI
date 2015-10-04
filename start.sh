@@ -6,6 +6,7 @@
 /sbin/service crond start
 /sbin/service xinetd start
 /sbin/service ndo2db start
+/sbin/service NPCD start
 /sbin/service nagios start
 
 #repair database to ensure consistency
