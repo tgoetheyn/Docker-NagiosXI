@@ -36,4 +36,4 @@ ADD start.sh /start.sh
 RUN chmod 755 /start.sh
 EXPOSE 80 5666 5667
 
-CMD ["/start.sh"]
+CMD bash -C '/start.sh';'bash'
