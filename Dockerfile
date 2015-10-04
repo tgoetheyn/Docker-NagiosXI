@@ -32,9 +32,6 @@ RUN service mysqld start && . ./functions.sh && run_sub ./E-importnagiosql
 RUN . ./functions.sh && run_sub ./F-startdaemons
 RUN . ./functions.sh && run_sub ./Z-webroot
 
-#cleanup
-RUN rm -rf /tmp/nagiosxi
-
 ADD start.sh /start.sh
 EXPOSE 80 5666 5667
 
