@@ -33,6 +33,7 @@ RUN . ./functions.sh && run_sub ./F-startdaemons
 RUN . ./functions.sh && run_sub ./Z-webroot
 
 ADD start.sh /start.sh
+RUN chmod 755 /start.sh
 EXPOSE 80 5666 5667
 
 CMD ["/start.sh"]
