@@ -24,7 +24,7 @@ RUN . ./functions.sh && run_sub ./13-cacti
 RUN . ./functions.sh && run_sub ./14-timezone
 
 ADD scripts/NDOUTILS-POST subcomponents/ndoutils/post-install
-RUN . ./functions.sh && run_sub ./A-subcomponents
+RUN chmod 755 subcomponents/ndoutils/post-install && . ./functions.sh && run_sub ./A-subcomponents
 RUN . ./functions.sh && run_sub ./B-installxi
 RUN . ./functions.sh && run_sub ./C-cronjobs
 RUN . ./functions.sh && run_sub ./D-chkconfigalldaemons
