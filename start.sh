@@ -1,4 +1,4 @@
-!/bin/sh
+#!/bin/bash
 /usr/sbin/init
 
 # starting services
