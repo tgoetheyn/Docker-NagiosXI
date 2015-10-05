@@ -1,12 +1,17 @@
 FROM centos:6 
 MAINTAINER tgoetheyn
 
-RUN yum -y install wget; yum clean all
+# get stuff from the interwebs
+RUN yum -y install wget tar; yum clean all
 WORKDIR /tmp
 RUN wget http://assets.nagios.com/downloads/nagiosxi/xi-latest.tar.gz
-RUN yum -y install tar
 RUN tar xzf xi-latest.tar.gz
 WORKDIR nagiosxi
+
+# overwrite custom config file
+ADD config.cfg xi-sys.cfg
+
+# start building
 RUN ./init.sh && . ./xi-sys.cfg && umask 0022 && . ./functions.sh && log="install.log"
 RUN export INTERACTIVE="False" && export INSTALL_PATH=`pwd`
 RUN . ./functions.sh && run_sub ./0-repos noupdate
@@ -32,6 +37,7 @@ RUN service mysqld start && . ./functions.sh && run_sub ./E-importnagiosql
 RUN . ./functions.sh && run_sub ./F-startdaemons
 RUN . ./functions.sh && run_sub ./Z-webroot
 
+# set startup script
 ADD start.sh /start.sh
 RUN chmod 755 /start.sh
 EXPOSE 80 5666 5667
