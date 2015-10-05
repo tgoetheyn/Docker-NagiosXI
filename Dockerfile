@@ -1,5 +1,5 @@
 FROM centos:6 
-MAINTAINER TonyG
+MAINTAINER tgoetheyn
 
 RUN yum -y install wget; yum clean all
 WORKDIR /tmp
