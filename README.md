@@ -16,3 +16,10 @@ http://YOUR_IP/nagiosxi/
 ```
 
 Finish the installation wizard and enjoy!
+
+You can safelly ignore the "SSH" error and "ntpd" warning in Nagios.
+it's normal because the container doesn't had SSH enabled.
+Also ntpd can 't run, because it cannot change the system time.
+
+For licensing, change to "free license" to keep using the product.
+The free license implice a 7 host limit.
