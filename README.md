@@ -1,7 +1,7 @@
 # Docker container for Nagios XI
 
 At the moment this is a quick and dirty built, but it works.
-If I find the time I will make it a litte more "solid"
+It is based on the fullinstall-script provided by the NagiosXI team, so as long as they don 't change to much stuff, it will keep working.
 
 You can start the container with the command:
 
