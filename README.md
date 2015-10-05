@@ -19,7 +19,7 @@ Finish the installation wizard and enjoy!
 
 
 You can safelly ignore the "SSH" error and "ntpd" warning in Nagios.
-it's normal because the container doesn't had SSH enabled.
+it's normal because the container doesn't have SSH enabled.
 Also ntpd can 't run, because it cannot change the system time.
 
 For licensing, change to "free license" to keep using the product.
