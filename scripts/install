@@ -1,0 +1,57 @@
+#!/bin/bash -e
+
+. ../../xi-sys.cfg
+
+pkgname="ndoutils-2.1.2"
+
+echo "Installing NDOUtils..."
+
+# Delete the old directory
+rm -rf "$pkgname"
+
+# Extract archive
+tar -xzf "$pkgname.tar.gz"
+
+# Apply our patches
+./apply-patches "$pkgname"
+
+# Make and install NDOUtils
+(
+	cd "./$pkgname"
+	./configure --with-init-type=sysv
+	make all
+	make install-init
+	# Copy 4.x module
+	cp -f src/ndomod-4x.o /usr/local/nagios/bin/ndomod.o
+    # Copy 4.x daemon
+    cp -f src/ndo2db-4x /usr/local/nagios/bin/ndo2db
+    # Copy utilities
+    cp -f src/file2sock /usr/local/nagios/bin/
+    cp -f src/log2ndo /usr/local/nagios/bin/
+    cp -f src/sockdebug /usr/local/nagios/bin/
+)
+
+# Post-install stuff
+./post-install $pkgname
+
+# Do a simple sanity check to make sure some key files exist...
+for f in /usr/local/nagios/bin/ndo2db /usr/local/nagios/bin/ndomod.o /usr/local/nagios/etc/ndomod.cfg /usr/local/nagios/etc/ndo2db.cfg ; do
+	if [ ! -f "$f" ]; then
+		echo "ERROR: NDOUtils install appears to have failed - exiting.  Missing file = $f"
+		exit 1
+	fi
+done
+
+# Check MySQL database
+echo "NOTE: If prompted, enter the MySQL root password"
+if mysql -u root -p"$mysqlpass" nagios -e "SELECT COUNT(*) FROM nagios_hosts" &>/dev/null; then
+	echo "NDOUtils database appears OK"
+else
+	echo "ERROR: NDOUtils database install appears to have failed - exiting."
+	exit 1
+fi
+
+# Things are okay
+echo "NDOUtils installed OK"
+
+

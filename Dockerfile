@@ -1,10 +1,10 @@
 FROM centos:6 
-MAINTAINER tgoetheyn
+MAINTAINER cbpeckles
 
 # get stuff from the interwebs
 RUN yum -y install wget tar; yum clean all
 WORKDIR /tmp
-RUN wget http://assets.nagios.com/downloads/nagiosxi/xi-latest.tar.gz
+RUN wget https://assets.nagios.com/downloads/nagiosxi/5/xi-5.4.13.tar.gz -O xi-latest.tar.gz
 RUN tar xzf xi-latest.tar.gz
 WORKDIR nagiosxi
 
@@ -25,11 +25,11 @@ RUN . ./functions.sh && run_sub ./9-dbbackups
 RUN . ./functions.sh && run_sub ./10-phplimits
 RUN . ./functions.sh && run_sub ./11-sourceguardian
 RUN . ./functions.sh && run_sub ./12-mrtg
-RUN . ./functions.sh && run_sub ./13-cacti
-RUN . ./functions.sh && run_sub ./14-timezone
+RUN . ./functions.sh && run_sub ./13-timezone
 
 ADD scripts/NDOUTILS-POST subcomponents/ndoutils/post-install
-RUN chmod 755 subcomponents/ndoutils/post-install && . ./functions.sh && run_sub ./A-subcomponents
+ADD scripts/install subcomponents/ndoutils/install
+RUN chmod 755 subcomponents/ndoutils/post-install && chmod 755 subcomponents/ndoutils/install && . ./functions.sh && run_sub ./A-subcomponents
 RUN service mysqld start && . ./functions.sh && run_sub ./B-installxi
 RUN . ./functions.sh && run_sub ./C-cronjobs
 RUN . ./functions.sh && run_sub ./D-chkconfigalldaemons

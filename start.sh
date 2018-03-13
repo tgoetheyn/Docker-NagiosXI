@@ -27,5 +27,5 @@ cat <<-EOF
 
 EOF
 
-tail -F /usr/local/nagios/var
+tail -F /usr/local/nagios/var/nagios.log
 
