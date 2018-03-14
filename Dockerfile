@@ -64,6 +64,8 @@ RUN . ./functions.sh \
 RUN . ./functions.sh \
     && run_sub ./Z-webroot
 
+RUN yum clean all
+
 # set startup script
 ADD start.sh /start.sh
 RUN chmod 755 /start.sh
