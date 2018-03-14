@@ -3,8 +3,9 @@ MAINTAINER cbpeckles
 
 # get stuff from the interwebs
 RUN yum -y install wget tar; yum clean all
-RUN wget https://assets.nagios.com/downloads/nagiosxi/5/xi-5.4.13.tar.gz -O /tmp/xi-latest.tar.gz \
-    | tar xzC /tmp/nagiosxi
+RUN mkdir /tmp/nagiosxi \
+    && wget -qO- https://assets.nagios.com/downloads/nagiosxi/5/xi-5.4.13.tar.gz \
+    | tar xz -C /tmp/nagiosxi
 
 # overwrite custom config file
 ADD config.cfg xi-sys.cfg
