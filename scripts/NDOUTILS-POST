@@ -10,6 +10,7 @@ echo "NDOUTILS-POST"
 
 # New init file
 cp -f mods/ndo2db.init /etc/init.d/ndo2db
+chmod +x /etc/init.d/ndo2db
 
 # Copy configs
 cp -f mods/cfg/ndo2db.cfg /usr/local/nagios/etc
