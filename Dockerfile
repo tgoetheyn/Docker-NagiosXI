@@ -68,9 +68,9 @@ RUN yum clean all
 
 RUN mkdir /data
 RUN mkdir /data/perfdata
-ln -s /data/perfdata /usr/local/nagios/share/perfdata
+RUN ln -s /data/perfdata /usr/local/nagios/share/perfdata
 RUN mkdir /data/mysql
-ln -s /data/mysql /var/lib/mysql
+RUN ln -s /data/mysql /var/lib/mysql
 
 # set startup script
 ADD start.sh /start.sh
