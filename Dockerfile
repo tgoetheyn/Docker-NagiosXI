@@ -66,12 +66,14 @@ RUN . ./functions.sh \
 
 RUN yum clean all
 
-RUN mkdir /data
-RUN mkdir /data/perfdata
+#RUN mkdir /data
+#RUN mkdir /data/perfdata
 #RUN mkdir /data/mysql
-RUN ln -sf /data/perfdata /usr/local/nagios/share/perfdata
+#RUN ln -sf /data/perfdata /usr/local/nagios/share/perfdata
 
+VOLUME /tmp/nagiosxi
 VOLUME /var/lib/mysql
+VOLUME /usr/local/nagios/share/perfdata
 
 # set startup script
 ADD start.sh /start.sh
