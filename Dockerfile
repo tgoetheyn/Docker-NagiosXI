@@ -1,6 +1,8 @@
 FROM centos:6 
 MAINTAINER cbpeckles
 
+VOLUME /var/lib/mysql
+
 # get stuff from the interwebs
 RUN yum -y install wget tar; yum clean all
 RUN mkdir /tmp/nagiosxi \
@@ -68,21 +70,8 @@ RUN yum clean all
 
 RUN mkdir /data
 RUN mkdir /data/perfdata
-RUN mkdir /data/mysql
+#RUN mkdir /data/mysql
 RUN ln -sf /data/perfdata /usr/local/nagios/share/perfdata
-
-#RUN ln -sf /data/mysql /var/lib/mysql
-#RUN service mysqld stop
-RUN cp -rpf /var/lib/mysql /data/mysql
-RUN mv /var/lib/mysql /var/lib/mysql.bak
-RUN sed -i.bak 's|/var/lib/mysql|/data/mysql|' /etc/my.cnf
-RUN sed -i.bak 's|/var/lib/mysql|/data/mysql|' /usr/local/nagiosxi/scripts/repairmysql.sh
-RUN sed -i.bak 's|/var/lib/mysql|/data/mysql|' /usr/local/nagiosxi/scripts/repair_databases.sh
-RUN echo [client] >> /etc/my.cnf
-RUN echo port=3306 >> /etc/my.cnf
-RUN echo socket=/data/mysql/mysql.sock >> /etc/my.cnf
-RUN rm -rf /var/lib/mysql.bak
-#RUN service mysqld start
 
 # set startup script
 ADD start.sh /start.sh
