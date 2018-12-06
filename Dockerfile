@@ -81,7 +81,7 @@ RUN sed -i.bak 's|/var/lib/mysql|/data/mysql|' /usr/local/nagiosxi/scripts/repai
 RUN echo [client] >> /etc/my.cnf
 RUN echo port=3306 >> /etc/my.cnf
 RUN echo socket=/data/mysql/mysql.sock >> /etc/my.cnf
-RUN rm /var/lib/mysql.bak
+RUN rm -rf /var/lib/mysql.bak
 #RUN service mysqld start
 
 # set startup script
