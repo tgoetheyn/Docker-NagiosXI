@@ -1,8 +1,6 @@
 FROM centos:6 
 MAINTAINER cbpeckles
 
-VOLUME /var/lib/mysql
-
 # get stuff from the interwebs
 RUN yum -y install wget tar; yum clean all
 RUN mkdir /tmp/nagiosxi \
@@ -72,6 +70,8 @@ RUN mkdir /data
 RUN mkdir /data/perfdata
 #RUN mkdir /data/mysql
 RUN ln -sf /data/perfdata /usr/local/nagios/share/perfdata
+
+VOLUME /var/lib/mysql
 
 # set startup script
 ADD start.sh /start.sh
