@@ -76,9 +76,12 @@ RUN ln -sf /data/perfdata /usr/local/nagios/share/perfdata
 RUN cp -rpf /var/lib/mysql /data/mysql
 RUN mv /var/lib/mysql /var/lib/mysql.bak
 RUN sed -i.bak 's|/var/lib/mysql|/data/mysql|' /etc/my.cnf
+RUN sed -i.bak 's|/var/lib/mysql|/data/mysql|' /usr/local/nagiosxi/scripts/repairmysql.sh
+RUN sed -i.bak 's|/var/lib/mysql|/data/mysql|' /usr/local/nagiosxi/scripts/repair_databases.sh
 RUN echo [client] >> /etc/my.cnf
 RUN echo port=3306 >> /etc/my.cnf
 RUN echo socket=/data/mysql/mysql.sock >> /etc/my.cnf
+RUN rm /var/lib/mysql.bak
 #RUN service mysqld start
 
 # set startup script
