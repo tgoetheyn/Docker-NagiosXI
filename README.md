@@ -6,7 +6,7 @@ It is based on the fullinstall-script provided by the NagiosXI team, so as long 
 You can start the container with the command:
 
 ```
-docker run -d -p 80:80 -p 5666:5666 -p 5667:5667 --name nagiosxi tgoetheyn/nagiosxi
+docker run -d -p 80:80 -p 5666:5666 -p 5667:5667 --name nagiosxi tgoetheyn/docker-nagiosxi
 ```
 
 Afterwards you can access the console at:
