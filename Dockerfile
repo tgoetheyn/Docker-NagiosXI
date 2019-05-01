@@ -4,7 +4,7 @@ MAINTAINER cbpeckles
 # get stuff from the interwebs
 RUN yum -y install wget tar; yum clean all
 RUN mkdir /tmp/nagiosxi \
-    && wget -qO- https://assets.nagios.com/downloads/nagiosxi/5/xi-5.4.13.tar.gz \
+    && wget -qO- https://assets.nagios.com/downloads/nagiosxi/5/xi-5.6.1.tar.gz \
     | tar xz -C /tmp
 WORKDIR /tmp/nagiosxi
 
@@ -35,20 +35,18 @@ RUN sed -i.bak s/selinux/sudoers/g 9-dbbackups
 RUN . ./functions.sh \
     && run_sub ./9-dbbackups
 RUN . ./functions.sh \
-    && run_sub ./10-phplimits
-RUN . ./functions.sh \
     && run_sub ./11-sourceguardian
 RUN . ./functions.sh \
-    && run_sub ./12-mrtg
-RUN . ./functions.sh \
-    && run_sub ./13-timezone
+    && run_sub ./13-phpini
 
 ADD scripts/NDOUTILS-POST subcomponents/ndoutils/post-install
 ADD scripts/install subcomponents/ndoutils/install
 RUN chmod 755 subcomponents/ndoutils/post-install \
     && chmod 755 subcomponents/ndoutils/install \
 	&& . ./functions.sh \
-	&& run_sub ./A-subcomponents
+	&& run_sub ./A-subcomponents \
+	&& run_sub ./A0-mrtg
+
 RUN service mysqld start \
     && . ./functions.sh \
 	&& run_sub ./B-installxi
