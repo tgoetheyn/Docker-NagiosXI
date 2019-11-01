@@ -1,10 +1,10 @@
 FROM centos:6 
-LABEL maintainer="cbpeckles"
+MAINTAINER cbpeckles
 
 # get stuff from the interwebs
 RUN yum -y install wget tar; yum clean all
 RUN mkdir /tmp/nagiosxi \
-    && wget -qO- https://assets.nagios.com/downloads/nagiosxi/5/xi-5.6.7.tar.gz \
+    && wget -qO- https://assets.nagios.com/downloads/nagiosxi/5/xi-5.6.1.tar.gz \
     | tar xz -C /tmp
 WORKDIR /tmp/nagiosxi
 
