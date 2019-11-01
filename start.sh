@@ -30,5 +30,8 @@ cat <<-EOF
 
 EOF
 
+# We need to know what the API key is for CI tests
+echo "UPDATE nagiosxi.xi_users SET api_key='APIkey123456' WHERE username='nagiosadmin';" | mysql -u root -pnagiosxi
+
 tail -F /usr/local/nagios/var/nagios.log
 
